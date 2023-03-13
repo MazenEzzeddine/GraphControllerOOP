@@ -36,8 +36,6 @@ public class Util {
 
     static void computeBranchingFactors (int[][] A, ConsumerGroup [] cgs ) {
 
-        //log.info("Adjacency matrix {}", A);
-
         for (int m = 0; m < A.length; m++) {
             double parentsArrivalRate= 0;
             boolean issource= true;
@@ -46,20 +44,14 @@ public class Util {
                     log.info( " {} {} is a prarent of {} {}", parent, cgs[parent], m, cgs[m] );
                     parentsArrivalRate += cgs[parent].getTotalArrivalRate();
                     issource = false;
-
                 }
-
             }
 
             if (issource) {
                 log.info(" {} is a source ms", m);
-
             } else {
                 log.info("branching factor for ms {} is {}", m, cgs[m].getTotalArrivalRate()/parentsArrivalRate);
             }
-            // attention to max lamda µ
-
         }
-
     }
 }

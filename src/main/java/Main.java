@@ -42,12 +42,11 @@ public class Main {
 
          ConsumerGroup[] cgs = new ConsumerGroup[topoOrder.size()];
          for (int i = 0; i < topoOrder.size(); i++) {
-             cgs[i] = new ConsumerGroup(topoOrder.get(i).getTopic(),2, 175, 5,
+             cgs[i] = new ConsumerGroup(topoOrder.get(i).getTopic(),2, 175, 1.6,
                      topoOrder.get(i).getConsumerGroupName());
         }
 
 
-         Util.computeBranchingFactors(g.getAdjMat(), cgs);
 
 
         log.info("Warming for 2 minutes seconds.");
@@ -87,9 +86,6 @@ public class Main {
             BinPack.scaleAsPerBinPack(cgs[2]);
         }
     }
-
-
-
 
 
 
