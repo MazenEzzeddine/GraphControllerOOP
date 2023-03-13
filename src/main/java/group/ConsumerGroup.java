@@ -13,16 +13,14 @@ public class ConsumerGroup {
     String name;
     Integer size;
     ArrayList<Partition> topicpartitions;
-
-
-
     double totalArrivalRate;
-
-
     double totalLag;
     double dynamicAverageMaxConsumptionRate;
     double wsla = 5;
     Instant lastUpScaleDecision = Instant.now();
+
+
+
     public ConsumerGroup(String inputTopic, Integer size, double dynamicAverageMaxConsumptionRate, double wsla, String name) {
         this.inputTopic = inputTopic;
         this.size = size;

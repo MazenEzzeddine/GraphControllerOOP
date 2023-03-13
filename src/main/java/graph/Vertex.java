@@ -4,7 +4,8 @@ import group.ConsumerGroup;
 
 public class Vertex {
     int label;
-    String topic;
+    ConsumerGroup g;
+
 
     public ConsumerGroup getG() {
         return g;
@@ -14,23 +15,12 @@ public class Vertex {
         this.g = g;
     }
 
-    ConsumerGroup g;
-
-
     public int getLabel() {
         return label;
     }
 
     public void setLabel(int label) {
         this.label = label;
-    }
-
-    public String getTopic() {
-        return topic;
-    }
-
-    public void setTopic(String topic) {
-        this.topic = topic;
     }
 
 
@@ -54,7 +44,6 @@ public class Vertex {
     public String toString() {
         return "Vertex{" +
                 "label=" + label +
-                ", topic='" + topic + '\'' +
                 '}' + "\n";
     }
 }

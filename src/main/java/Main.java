@@ -72,6 +72,8 @@ public class Main {
         ArrivalRates.arrivalRateTopic2(g.getVertex(1).getG());
         ArrivalRates.arrivalRateTopic5(g.getVertex(2).getG());
 
+
+
         Util.computeBranchingFactors(g);
         ArrivalRates.arrivalRateTopic1(g);
 
