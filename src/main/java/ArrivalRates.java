@@ -1,3 +1,4 @@
+import graph.Graph;
 import group.ConsumerGroup;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -99,7 +100,7 @@ public class ArrivalRates {
     }
 
 
-    static void arrivalRateTopic1(ConsumerGroup[] g) {
+    static void arrivalRateTopic1(Graph g) {
         HttpClient client = HttpClient.newHttpClient();
         ////////////////////////////////////////////////////
         List<URI> partitions = new ArrayList<>();
@@ -155,9 +156,9 @@ public class ArrivalRates {
             } catch (InterruptedException | ExecutionException e) {
                 e.printStackTrace();
             }
-            g[0].getTopicpartitions().get(partition).setArrivalRate(partitionArrivalRate);
-            g[1].getTopicpartitions().get(partition).setArrivalRate(partitionArrivalRate/**0.7*/);
-            g[2].getTopicpartitions().get(partition).setArrivalRate(partitionArrivalRate/**0.7*/);
+            g.getVertex(0).getG().getTopicpartitions().get(partition).setArrivalRate(partitionArrivalRate);
+            g.getVertex(1).getG().getTopicpartitions().get(partition).setArrivalRate(partitionArrivalRate);
+            g.getVertex(2).getG().getTopicpartitions().get(partition).setArrivalRate(partitionArrivalRate);
 
            // Scale5p.topicpartitions5.get(partition).setArrivalRate(partitionArrivalRate*0.7);
 
@@ -165,7 +166,7 @@ public class ArrivalRates {
             partition++;
         }
         log.info("totalArrivalRate for  topic 1 {}", totalarrivalstopic1);
-        g[0].setTotalArrivalRate(totalarrivalstopic1);
+        g.getVertex(0).getG().setTotalArrivalRate(totalarrivalstopic1);
 
         partition = 0;
         double totallag = 0.0;
@@ -176,7 +177,7 @@ public class ArrivalRates {
             } catch (InterruptedException | ExecutionException e) {
                 e.printStackTrace();
             }
-            g[0].getTopicpartitions().get(partition).setLag(partitionLag);
+            g.getVertex(0).getG().getTopicpartitions().get(partition).setLag(partitionLag);
 
             /*Scale2.topicpartitions2.get(partition).setLag((long)(partitionLag*0.7));
             Scale5.topicpartitions5.get(partition).setLag((long)(partitionLag*0.7));*/
@@ -189,9 +190,9 @@ public class ArrivalRates {
         }
 
 
-        g[0].setTotalLag(totallag);
+        g.getVertex(0).getG().setTotalLag(totallag);
 
-        double noise = Math.max(totalarrivalstopic1, g[0].getSize()*175 );
+        double noise = Math.max(totalarrivalstopic1, g.getVertex(0).getG().getSize()*175 );
         double actualLag = Math.max(0, totallag - noise);
 
 

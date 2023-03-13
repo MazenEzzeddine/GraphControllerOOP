@@ -1,5 +1,7 @@
 package graph;
 
+import group.ConsumerGroup;
+
 import java.util.Stack;
 
 public class Graph {
@@ -24,8 +26,8 @@ public class Graph {
         topoStack = new Stack<>();
     }
 
-    public void addVertex(int label, String topic, String cg) {
-        V[nV] = new Vertex(label, topic, cg);
+    public void addVertex(int label,  ConsumerGroup g) {
+        V[nV] = new Vertex(label, g);
         nV++;
     }
 

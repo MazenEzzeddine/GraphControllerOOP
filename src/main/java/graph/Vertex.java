@@ -1,9 +1,20 @@
 package graph;
 
+import group.ConsumerGroup;
+
 public class Vertex {
     int label;
     String topic;
-    String consumerGroupName;
+
+    public ConsumerGroup getG() {
+        return g;
+    }
+
+    public void setG(ConsumerGroup g) {
+        this.g = g;
+    }
+
+    ConsumerGroup g;
 
 
     public int getLabel() {
@@ -22,14 +33,6 @@ public class Vertex {
         this.topic = topic;
     }
 
-    public String getConsumerGroupName() {
-        return consumerGroupName;
-    }
-
-    public void setConsumerGroupName(String consumerGroupName) {
-        this.consumerGroupName = consumerGroupName;
-    }
-
 
     public boolean isVisited() {
         return isVisited;
@@ -41,11 +44,10 @@ public class Vertex {
 
     boolean isVisited;
 
-    Vertex(int label, String t, String cgn) {
+    Vertex(int label,  ConsumerGroup g) {
         this.label = label;
         isVisited = false;
-        topic = t;
-        consumerGroupName =cgn;
+        this.g = g;
     }
 
     @Override
@@ -53,7 +55,6 @@ public class Vertex {
         return "Vertex{" +
                 "label=" + label +
                 ", topic='" + topic + '\'' +
-                ", consumerGroupName='" + consumerGroupName + '\'' +
                 '}' + "\n";
     }
 }

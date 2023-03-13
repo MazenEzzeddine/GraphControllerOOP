@@ -1,5 +1,6 @@
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import graph.Graph;
 import group.ConsumerGroup;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -34,15 +35,17 @@ public class Util {
     }
 
 
-    static void computeBranchingFactors (int[][] A, ConsumerGroup [] cgs ) {
+    static void computeBranchingFactors (Graph g) {
 
+
+        int [][] A = g.getAdjMat();
         for (int m = 0; m < A.length; m++) {
             double parentsArrivalRate= 0;
             boolean issource= true;
             for (int parent = 0; parent < A[m].length; parent++) {
                 if (A[parent][m] == 1) {
-                    log.info( " {} {} is a prarent of {} {}", parent, cgs[parent], m, cgs[m] );
-                    parentsArrivalRate += cgs[parent].getTotalArrivalRate();
+                    log.info( " {} {} is a prarent of {} {}", parent, g.getVertex(parent).getG() , m, g.getVertex(m).getG() );
+                    parentsArrivalRate += g.getVertex(parent).getG().getTotalArrivalRate();
                     issource = false;
                 }
             }
@@ -50,7 +53,7 @@ public class Util {
             if (issource) {
                 log.info(" {} is a source ms", m);
             } else {
-                log.info("branching factor for ms {} is {}", m, cgs[m].getTotalArrivalRate()/parentsArrivalRate);
+                log.info("branching factor for ms {} is {}", m, g.getVertex(m).getG().getTotalArrivalRate()/parentsArrivalRate);
             }
         }
     }

@@ -26,9 +26,15 @@ public class Main {
      private static void initialize() throws InterruptedException, ExecutionException {
          //System.out.println(topoOrder);
          Graph g = new Graph(3);
-         g.addVertex(0, "testtopic1", "cons1persec");
-         g.addVertex(1, "testtopic2", "cons1persec2");
-         g.addVertex(2, "testtopic3", "cons1persec5");
+
+         ConsumerGroup g0 = new ConsumerGroup("testtopic1", 2, 175, 5, "cons1persec");
+         ConsumerGroup g1 = new ConsumerGroup("testtopic2", 2,  175, 5, "cons1persec2");
+         ConsumerGroup g2 = new ConsumerGroup("testtopic3", 2,  175, 5, "cons1persec5");
+
+
+         g.addVertex(0, g0);
+         g.addVertex(1, g1);
+         g.addVertex(2, g2);
          g.addEdge(0, 1);
          g.addEdge(1, 2);
 
@@ -40,11 +46,7 @@ public class Main {
          }
          System.out.println(topoOrder);
 
-         ConsumerGroup[] cgs = new ConsumerGroup[topoOrder.size()];
-         for (int i = 0; i < topoOrder.size(); i++) {
-             cgs[i] = new ConsumerGroup(topoOrder.get(i).getTopic(),2, 175, 1.6,
-                     topoOrder.get(i).getConsumerGroupName());
-        }
+
 
 
 
@@ -55,7 +57,7 @@ public class Main {
 
          while (true) {
             log.info("Querying Prometheus");
-            Main.QueryingPrometheus(cgs, g);
+            Main.QueryingPrometheus(g);
             log.info("Sleeping for 5 seconds");
             log.info("******************************************");
             log.info("******************************************");
@@ -64,26 +66,26 @@ public class Main {
     }
 
 
-    static void QueryingPrometheus( ConsumerGroup[] cgs, Graph g) throws ExecutionException, InterruptedException {
+    static void QueryingPrometheus( Graph g) throws ExecutionException, InterruptedException {
 
-        ArrivalRates.arrivalRateTopic1(cgs);
-        ArrivalRates.arrivalRateTopic2(cgs[1]);
-        ArrivalRates.arrivalRateTopic5(cgs[2]);
+        ArrivalRates.arrivalRateTopic1(g);
+        ArrivalRates.arrivalRateTopic2(g.getVertex(1).getG());
+        ArrivalRates.arrivalRateTopic5(g.getVertex(2).getG());
 
-        Util.computeBranchingFactors(g.getAdjMat(), cgs);
-        ArrivalRates.arrivalRateTopic1(cgs);
+        Util.computeBranchingFactors(g);
+        ArrivalRates.arrivalRateTopic1(g);
 
-        if (Duration.between(cgs[0].getLastUpScaleDecision(), Instant.now()).getSeconds() > 15) {
+        if (Duration.between(g.getVertex(0).getG().getLastUpScaleDecision(), Instant.now()).getSeconds() > 15) {
             //QueryRate.queryConsumerGroup();
-           BinPack.scaleAsPerBinPack(cgs[0]);
+           BinPack.scaleAsPerBinPack(g.getVertex(0).getG());
         }
-        if (Duration.between(cgs[1].getLastUpScaleDecision(), Instant.now()).getSeconds() > 15) {
+        if (Duration.between(g.getVertex(1).getG().getLastUpScaleDecision(), Instant.now()).getSeconds() > 15) {
             //QueryRate.queryConsumerGroup();
-            BinPack.scaleAsPerBinPack(cgs[1]);
+            BinPack.scaleAsPerBinPack(g.getVertex(1).getG());
         }
-        if (Duration.between(cgs[2].getLastUpScaleDecision(), Instant.now()).getSeconds() > 15) {
+        if (Duration.between(g.getVertex(2).getG().getLastUpScaleDecision(), Instant.now()).getSeconds() > 15) {
            // QueryRate.queryConsumerGroup();
-            BinPack.scaleAsPerBinPack(cgs[2]);
+            BinPack.scaleAsPerBinPack(g.getVertex(2).getG());
         }
     }
 
