@@ -18,6 +18,11 @@ import java.util.stream.Collectors;
 public class ArrivalRates {
     private static final Logger log = LogManager.getLogger(ArrivalRates.class);
 
+
+    static void  computeArrivalRate () {
+
+    }
+
     static void arrivalRateTopic2(ConsumerGroup g) {
         HttpClient client = HttpClient.newHttpClient();
 
