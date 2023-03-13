@@ -33,7 +33,6 @@ public class Graph {
 
     public void addEdge(int s, int d) {
         adjMat[s][d] = 1;
-        //adjMat[d][s] = 1;
     }
 
     public Vertex getVertex(int i) {
