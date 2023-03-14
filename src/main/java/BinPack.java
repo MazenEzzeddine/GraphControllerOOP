@@ -17,7 +17,7 @@ public class BinPack {
     private static final Logger log = LogManager.getLogger(BinPack.class);
 
     public static void scaleAsPerBinPack(ConsumerGroup g) {
-        log.info("Currently we have this number of consumers group1 {}", g.getSize());
+        log.info("Currently we have this number of consumers group {} {}", g.getKafkaName(), g.getSize());
         int neededsize = binPackAndScale(g);
         log.info("We currently need the following consumers for group1 (as per the bin pack) {}", neededsize);
         int replicasForscale = neededsize - g.getSize();
@@ -27,7 +27,7 @@ public class BinPack {
             g.setSize(neededsize);
             try (final KubernetesClient k8s = new DefaultKubernetesClient()) {
                 k8s.apps().deployments().inNamespace("default").withName(g.getName()).scale(neededsize);
-                log.info("I have Upscaled group1 you should have {}", neededsize);
+                log.info("I have Upscaled group {} you should have {}", g.getKafkaName(), neededsize);
                 g.setLastUpScaleDecision(Instant.now());
             }
         }
@@ -35,11 +35,11 @@ public class BinPack {
             int neededsized = binPackAndScaled(g);
             int replicasForscaled =  g.getSize() - neededsized;
             if(replicasForscaled>0) {
-                log.info("We have to downscale  group1 by {}", replicasForscaled);
+                log.info("We have to downscale  group by {} {}", g.getKafkaName() ,replicasForscaled);
                 g.setSize(neededsized);
                 try (final KubernetesClient k8s = new DefaultKubernetesClient()) {
                     k8s.apps().deployments().inNamespace("default").withName(g.getName()).scale(neededsized);
-                    log.info("I have downscaled group1 you should have {}", neededsized);
+                    log.info("I have downscaled group {} you should have {}", g.getKafkaName(), neededsized);
                 }
                 g.setLastUpScaleDecision(Instant.now());
             }
@@ -50,7 +50,7 @@ public class BinPack {
 
 
     private static int binPackAndScale(ConsumerGroup g) {
-        log.info(" shall we upscale group 1");
+        log.info(" shall we upscale group {}", g.getKafkaName());
         List<Consumer> consumers = new ArrayList<>();
         int consumerCount = 1;
         List<Partition> parts = new ArrayList<>(g.getTopicpartitions());
@@ -105,7 +105,7 @@ public class BinPack {
             }
 
         }
-        log.info(" The BP up scaler recommended for group1 {}", consumers.size());
+        log.info(" The BP up scaler recommended for group {} {}",g.getKafkaName(), consumers.size());
         return consumers.size();
     }
 
@@ -114,7 +114,7 @@ public class BinPack {
 
 
     private static int binPackAndScaled(ConsumerGroup g) {
-        log.info(" shall we down scale group 1 ");
+        log.info(" shall we down scale group {} ", g.getKafkaName());
         List<Consumer> consumers = new ArrayList<>();
         int consumerCount = 1;
         List<Partition> parts = new ArrayList<>(g.getTopicpartitions());
@@ -166,7 +166,7 @@ public class BinPack {
             }
         }
 
-        log.info(" The BP down scaler recommended  for group1 {}", consumers.size());
+        log.info(" The BP down scaler recommended  for group {} {}",g.getKafkaName(), consumers.size());
         return consumers.size();
     }
 

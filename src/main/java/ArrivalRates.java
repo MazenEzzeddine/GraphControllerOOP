@@ -110,7 +110,6 @@ public class ArrivalRates {
 
         g.setTotalLag(totallag2);
 
-        log.info("******************");
 
     }
 
