@@ -42,19 +42,20 @@ public class Util {
             boolean issource= true;
             for (int parent = 0; parent < A[m].length; parent++) {
                 if (A[parent][m] == 1) {
-                    log.info( " {} {} is a prarent of {} {}", parent, g.getVertex(parent).getG() , m, g.getVertex(m).getG() );
+                    //log.info( " {} {} is a prarent of {} {}", parent, g.getVertex(parent).getG() , m, g.getVertex(m).getG() );
                     parentsArrivalRate += g.getVertex(parent).getG().getTotalArrivalRate();
                     issource = false;
                 }
             }
 
             if (issource) {
-                log.info(" {} is a source ms", m);
-            } else {
-                log.info("g.getVertex(m).getG().getTotalArrivalRate()  {}", g.getVertex(m).getG().getTotalArrivalRate());
-                log.info("parentsArrivalRate  {}", g.getVertex(m).getG().getTotalArrivalRate());
+                g.getVertex(m).getG().setBranchFactor(1.0);
 
-                log.info("branching factor for ms {} is {}", m, g.getVertex(m).getG().getTotalArrivalRate()/parentsArrivalRate);
+            } else {
+                g.getVertex(m).getG().setBranchFactor(g.getVertex(m).getG().getTotalArrivalRate()/parentsArrivalRate);
+
+
+               // log.info("branching factor for ms {} is {}", m, g.getVertex(m).getG().getTotalArrivalRate()/parentsArrivalRate);
             }
         }
     }

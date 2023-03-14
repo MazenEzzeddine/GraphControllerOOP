@@ -27,9 +27,9 @@ public class Main {
          //System.out.println(topoOrder);
          Graph g = new Graph(3);
 
-         ConsumerGroup g0 = new ConsumerGroup("testtopic1", 2, 175, 5, "cons1persec", "testgroup1");
-         ConsumerGroup g1 = new ConsumerGroup("testtopic2", 2,  175, 5, "cons1persec2", "testgroup2");
-         ConsumerGroup g2 = new ConsumerGroup("testtopic5", 2,  175, 5, "cons1persec5", "testgroup5");
+         ConsumerGroup g0 = new ConsumerGroup("testtopic1", 1, 175, 5, "cons1persec", "testgroup1");
+         ConsumerGroup g1 = new ConsumerGroup("testtopic2", 1,  175, 5, "cons1persec2", "testgroup2");
+         ConsumerGroup g2 = new ConsumerGroup("testtopic5", 1,  175, 5, "cons1persec5", "testgroup5");
 
 
          g.addVertex(0, g0);
@@ -42,7 +42,7 @@ public class Main {
 
          Stack<Vertex> ts = g.dfs(g.getVertex(0)); // 1 2 3 4 5
          List<Vertex> topoOrder = new ArrayList<>();
-         // System.out.println(ts);
+         //topological order
          while(!ts.isEmpty()) {
              topoOrder.add(ts.pop());
          }
@@ -80,7 +80,6 @@ public class Main {
     static void QueryingPrometheus( Graph g, List<Vertex> topoOrder) throws ExecutionException, InterruptedException {
 
 
-
         // cpmpute arrival rates before autoscaling to get the BFs
         for (int i = 0; i < topoOrder.size(); i++) {
             ArrivalRates.arrivalRateTopicGeneral( g.getVertex(i).getG());
@@ -93,22 +92,18 @@ public class Main {
         ArrivalRates.arrivalRateTopic2(g.getVertex(2).getG());*/
 
 
-
         Util.computeBranchingFactors(g);
         ArrivalRates.arrivalRateTopic1(g);
 
-        if (Duration.between(g.getVertex(0).getG().getLastUpScaleDecision(), Instant.now()).getSeconds() > 15) {
-            //QueryRate.queryConsumerGroup();
-           BinPack.scaleAsPerBinPack(g.getVertex(0).getG());
+
+        for (int i = 0; i < topoOrder.size(); i++) {
+            log.info("Branch factor of ms  {} is {}", i, g.getVertex(i).getG().getBranchFactor());
+            if (Duration.between(g.getVertex(i).getG().getLastUpScaleDecision(), Instant.now()).getSeconds() > 15) {
+                //QueryRate.queryConsumerGroup();
+                BinPack.scaleAsPerBinPack(g.getVertex(i).getG());
+            }
         }
-        if (Duration.between(g.getVertex(1).getG().getLastUpScaleDecision(), Instant.now()).getSeconds() > 15) {
-            //QueryRate.queryConsumerGroup();
-            BinPack.scaleAsPerBinPack(g.getVertex(1).getG());
-        }
-        if (Duration.between(g.getVertex(2).getG().getLastUpScaleDecision(), Instant.now()).getSeconds() > 15) {
-           // QueryRate.queryConsumerGroup();
-            BinPack.scaleAsPerBinPack(g.getVertex(2).getG());
-        }
+
     }
 
 
