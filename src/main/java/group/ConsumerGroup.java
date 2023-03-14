@@ -70,17 +70,12 @@ public class ConsumerGroup {
         return dynamicAverageMaxConsumptionRate;
     }
 
-    public void setDynamicAverageMaxConsumptionRate(double dynamicAverageMaxConsumptionRate) {
-        this.dynamicAverageMaxConsumptionRate = dynamicAverageMaxConsumptionRate;
-    }
+
 
     public double getWsla() {
         return wsla;
     }
 
-    public void setWsla(double wsla) {
-        this.wsla = wsla;
-    }
 
     public Instant getLastUpScaleDecision() {
         return lastUpScaleDecision;
@@ -95,17 +90,11 @@ public class ConsumerGroup {
         return inputTopic;
     }
 
-    public void setInputTopic(String inputTopic) {
-        this.inputTopic = inputTopic;
-    }
 
     public ArrayList<Partition> getTopicpartitions() {
         return topicpartitions;
     }
 
-    public void setTopicpartitions(ArrayList<Partition> topicpartitions) {
-        this.topicpartitions = topicpartitions;
-    }
 
     public double getTotalArrivalRate() {
         return totalArrivalRate;

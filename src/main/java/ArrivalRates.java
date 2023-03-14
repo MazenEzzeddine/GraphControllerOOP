@@ -1,4 +1,3 @@
-import graph.Graph;
 import group.ConsumerGroup;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -23,8 +22,8 @@ public class ArrivalRates {
 
         String topic = g.getInputTopic();
         String cg = g.getKafkaName();
-        List<String> arrivalqueries = Constants2.getQueriesArrival(topic);
-        List<String> lagqueries = Constants2.getQueriesLag(topic, cg);
+        List<String> arrivalqueries = Constants.getQueriesArrival(topic);
+        List<String> lagqueries = Constants.getQueriesLag(topic, cg);
 
 
         HttpClient client = HttpClient.newHttpClient();
@@ -108,10 +107,7 @@ public class ArrivalRates {
         }
 
         log.info("totalLag for topic {} {}", g.getInputTopic(), totallag2);
-     /*   for (int i = 0; i <= 4; i++) {
-            log.info("topic 5 partition {} has the following arrival rate {} and lag {}", i, Scale5p.topicpartitions5.get(i).getArrivalRate(),
-                    Scale5p.topicpartitions5.get(i).getLag());
-        }*/
+
         g.setTotalLag(totallag2);
 
         log.info("******************");

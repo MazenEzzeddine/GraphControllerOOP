@@ -24,7 +24,6 @@ public class Main {
 
 
      private static void initialize() throws InterruptedException, ExecutionException {
-         //System.out.println(topoOrder);
          Graph g = new Graph(3);
 
          ConsumerGroup g0 = new ConsumerGroup("testtopic1", 1, 175, 5, "cons1persec", "testgroup1");
@@ -47,15 +46,9 @@ public class Main {
              topoOrder.add(ts.pop());
          }
 
-
-
-
-
 /*
         log.info("Warming for 2 minutes seconds.");
         Thread.sleep(60*2*1000);*/
-
-
          log.info("Warming 30  seconds.");
          Thread.sleep(30*1000);
 

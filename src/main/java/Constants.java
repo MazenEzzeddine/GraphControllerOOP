@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class Constants2 {
+public class Constants {
 
 
    static List<String> getQueriesArrival(String topicName) {

@@ -18,10 +18,6 @@ public class Graph {
     }
 
 
-    public Stack<Vertex> getTopoStack() {
-        return topoStack;
-    }
-
 
     public Graph(int vMax) {
         this.vMax = vMax; // Maximum vertex can vbe added

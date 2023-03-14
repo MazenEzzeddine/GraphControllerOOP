@@ -54,8 +54,6 @@ public class Util {
 
             } else {
                 g.getVertex(m).getG().setBranchFactor(g.getVertex(m).getG().getTotalArrivalRate()/parentsArrivalRate);
-
-               // log.info("branching factor for ms {} is {}", m, g.getVertex(m).getG().getTotalArrivalRate()/parentsArrivalRate);
             }
         }
     }
