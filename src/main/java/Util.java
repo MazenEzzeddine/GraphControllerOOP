@@ -43,7 +43,8 @@ public class Util {
             for (int parent = 0; parent < A[m].length; parent++) {
                 if (A[parent][m] == 1) {
                     //log.info( " {} {} is a prarent of {} {}", parent, g.getVertex(parent).getG() , m, g.getVertex(m).getG() );
-                    parentsArrivalRate += g.getVertex(parent).getG().getTotalArrivalRate();
+                    parentsArrivalRate += Math.min(g.getVertex(parent).getG().getTotalArrivalRate(),
+                            g.getVertex(parent).getG().getSize()* g.getVertex(parent).getG().getDynamicAverageMaxConsumptionRate());
                     issource = false;
                 }
             }
@@ -53,7 +54,6 @@ public class Util {
 
             } else {
                 g.getVertex(m).getG().setBranchFactor(g.getVertex(m).getG().getTotalArrivalRate()/parentsArrivalRate);
-
 
                // log.info("branching factor for ms {} is {}", m, g.getVertex(m).getG().getTotalArrivalRate()/parentsArrivalRate);
             }

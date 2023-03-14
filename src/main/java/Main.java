@@ -80,7 +80,7 @@ public class Main {
     static void QueryingPrometheus( Graph g, List<Vertex> topoOrder) throws ExecutionException, InterruptedException {
 
 
-        // cpmpute arrival rates before autoscaling to get the BFs
+        // print actual arrival rates arrival rates
         for (int i = 0; i < topoOrder.size(); i++) {
             ArrivalRates.arrivalRateTopicGeneral( g.getVertex(i).getG());
         }
@@ -93,18 +93,47 @@ public class Main {
 
 
         Util.computeBranchingFactors(g);
-        ArrivalRates.arrivalRateTopic1(g);
+       // ArrivalRates.arrivalRateTopic1(g);
 
 
         for (int i = 0; i < topoOrder.size(); i++) {
             log.info("Branch factor of ms  {} is {}", i, g.getVertex(i).getG().getBranchFactor());
+            getArrivalRate(g, i);
             if (Duration.between(g.getVertex(i).getG().getLastUpScaleDecision(), Instant.now()).getSeconds() > 15) {
                 //QueryRate.queryConsumerGroup();
                 BinPack.scaleAsPerBinPack(g.getVertex(i).getG());
             }
         }
 
+
+
     }
+
+
+    static void getArrivalRate(Graph g, int m) {
+
+            int [][] A = g.getAdjMat();
+
+                double parentsArrivalRate= 0;
+                for (int parent = 0; parent < A[m].length; parent++) {
+                    if (A[parent][m] == 1) {
+                        //log.info( " {} {} is a prarent of {} {}", parent, g.getVertex(parent).getG() , m, g.getVertex(m).getG() );
+                        parentsArrivalRate += g.getVertex(parent).getG().getTotalArrivalRate();
+                    }
+                }
+
+
+                if (parentsArrivalRate ==0) {
+                   ArrivalRates.arrivalRateTopicGeneral(g.getVertex(m).getG());
+                   log.info("Arrival rate of micorservice {} {}",m,g.getVertex(m).getG().getTotalArrivalRate());
+                } else {
+                    g.getVertex(m).getG().setTotalArrivalRate(parentsArrivalRate*g.getVertex(m).getG().getBranchFactor());
+                    log.info("Arrival rate of micorservice {} {}",m,parentsArrivalRate*g.getVertex(m).getG().getBranchFactor());
+
+                }
+            }
+
+
 
 
 
