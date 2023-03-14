@@ -51,11 +51,6 @@ public class Main {
 
 
 
-
-
-
-
-
 /*
         log.info("Warming for 2 minutes seconds.");
         Thread.sleep(60*2*1000);*/

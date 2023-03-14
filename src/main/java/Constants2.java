@@ -27,10 +27,7 @@ public class Constants2 {
          queries.add(topic1p2);
          queries.add(topic1p3);
          queries.add(topic1p4);
-
-
          return queries;
-
 
    }
 
@@ -39,7 +36,6 @@ public class Constants2 {
    static  List<String> getQueriesLag(String topicName, String gname) {
 
         List<String> querieslag = new ArrayList<>();
-
 
          String topic1lag = "http://prometheus-operated:9090/api/v1/query?query=" +
                 "sum(kafka_consumergroup_lag%7Bconsumergroup=%22"+gname+"%22,topic=%22"+ topicName+ "%22,namespace=%22default%22%7D)%20by%20(consumergroup,topic)";
@@ -61,12 +57,7 @@ public class Constants2 {
         querieslag.add(topic1p3lag);
         querieslag.add(topic1p4lag);
 
-
-
         return querieslag;
-
-
-
     }
 
 
