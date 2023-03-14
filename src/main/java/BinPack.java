@@ -16,8 +16,6 @@ public class BinPack {
 
     private static final Logger log = LogManager.getLogger(BinPack.class);
 
-
-
     public static void scaleAsPerBinPack(ConsumerGroup g) {
         log.info("Currently we have this number of consumers group1 {}", g.getSize());
         int neededsize = binPackAndScale(g);

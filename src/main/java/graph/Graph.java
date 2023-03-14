@@ -15,13 +15,18 @@ public class Graph {
     private final int[][] adjMat;
     public int nV;
     private final Stack<Vertex> s;
+
+    public Stack<Vertex> getTopoStack() {
+        return topoStack;
+    }
+
     private final Stack<Vertex> topoStack;
 
     public Graph(int vMax) {
         this.vMax = vMax; // Maximum vertex can vbe added
         nV = 0; // counter for the vertices we will work with 1
         V = new Vertex[vMax ];
-        adjMat = new int[vMax ][vMax];
+        adjMat = new int[vMax][vMax];
         s = new Stack<>();
         topoStack = new Stack<>();
     }

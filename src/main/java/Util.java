@@ -36,8 +36,6 @@ public class Util {
 
 
     static void computeBranchingFactors (Graph g) {
-
-
         int [][] A = g.getAdjMat();
         for (int m = 0; m < A.length; m++) {
             double parentsArrivalRate= 0;
@@ -53,6 +51,9 @@ public class Util {
             if (issource) {
                 log.info(" {} is a source ms", m);
             } else {
+                log.info("g.getVertex(m).getG().getTotalArrivalRate()  {}", g.getVertex(m).getG().getTotalArrivalRate());
+                log.info("parentsArrivalRate  {}", g.getVertex(m).getG().getTotalArrivalRate());
+
                 log.info("branching factor for ms {} is {}", m, g.getVertex(m).getG().getTotalArrivalRate()/parentsArrivalRate);
             }
         }

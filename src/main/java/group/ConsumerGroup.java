@@ -11,6 +11,16 @@ public class ConsumerGroup {
 
     String inputTopic;
     String name;
+
+    public String getKafkaName() {
+        return kafkaName;
+    }
+
+    public void setKafkaName(String kafkaName) {
+        this.kafkaName = kafkaName;
+    }
+
+    String kafkaName;
     Integer size;
     ArrayList<Partition> topicpartitions;
     double totalArrivalRate;
@@ -21,12 +31,13 @@ public class ConsumerGroup {
 
 
 
-    public ConsumerGroup(String inputTopic, Integer size, double dynamicAverageMaxConsumptionRate, double wsla, String name) {
+    public ConsumerGroup(String inputTopic, Integer size, double dynamicAverageMaxConsumptionRate, double wsla, String name, String kname) {
         this.inputTopic = inputTopic;
         this.size = size;
         this.dynamicAverageMaxConsumptionRate = dynamicAverageMaxConsumptionRate;
         this.wsla = wsla;
         this.name = name;
+        this.kafkaName = kname;
         topicpartitions = new ArrayList<>();
         for (int i = 0; i <= 4; i++) {
             topicpartitions.add(new Partition(i, 0, 0));
