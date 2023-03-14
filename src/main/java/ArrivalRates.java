@@ -18,88 +18,6 @@ import java.util.stream.Collectors;
 public class ArrivalRates {
     private static final Logger log = LogManager.getLogger(ArrivalRates.class);
 
-    static void arrivalRateTopic2(ConsumerGroup g) {
-        HttpClient client = HttpClient.newHttpClient();
-
-        List<URI> partitions2 = new ArrayList<>();
-        try {
-            partitions2 = Arrays.asList(
-                    new URI(Constants.topic2p0),
-                    new URI(Constants.topic2p1),
-                    new URI(Constants.topic2p2),
-                    new URI(Constants.topic2p3),
-                    new URI(Constants.topic2p4)
-            );
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
-        List<URI> partitionslag2 = new ArrayList<>();
-        try {
-            partitionslag2 = Arrays.asList(
-                    new URI(Constants.topic2p0lag),
-                    new URI(Constants.topic2p1lag),
-                    new URI(Constants.topic2p2lag),
-                    new URI(Constants.topic2p3lag),
-                    new URI(Constants.topic2p4lag)
-            );
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
-        ///////////////////////////////////////////////////
-
-        List<CompletableFuture<String>> partitionsfutures2 = partitions2.stream()
-                .map(target -> client
-                        .sendAsync(
-                                HttpRequest.newBuilder(target).GET().build(),
-                                HttpResponse.BodyHandlers.ofString())
-                        .thenApply(HttpResponse::body))
-                .collect(Collectors.toList());
-
-
-        List<CompletableFuture<String>> partitionslagfuture2 = partitionslag2.stream()
-                .map(target -> client
-                        .sendAsync(
-                                HttpRequest.newBuilder(target).GET().build(),
-                                HttpResponse.BodyHandlers.ofString())
-                        .thenApply(HttpResponse::body))
-                .collect(Collectors.toList());
-
-
-        int partition2 = 0;
-        double totalarrivalstopic2 = 0.0;
-        double partitionArrivalRate2 = 0.0;
-        for (CompletableFuture<String> cf : partitionsfutures2) {
-            try {
-                partitionArrivalRate2 = Util.parseJsonArrivalRate(cf.get(), partition2);
-            } catch (InterruptedException | ExecutionException e) {
-                e.printStackTrace();
-            }
-            g.getTopicpartitions().get(partition2).setArrivalRate(partitionArrivalRate2);
-            totalarrivalstopic2 += partitionArrivalRate2;
-            partition2++;
-        }
-        log.info("totalArrivalRate for  topic 2 {}", totalarrivalstopic2);
-        g.setTotalArrivalRate(totalarrivalstopic2);
-        partition2 = 0;
-        double totallag2 = 0.0;
-        long partitionLag2 = 0L;
-        for (CompletableFuture<String> cf : partitionslagfuture2) {
-            try {
-                partitionLag2 = Util.parseJsonArrivalLag(cf.get(), partition2).longValue();
-            } catch (InterruptedException | ExecutionException e) {
-                e.printStackTrace();
-            }
-
-            g.getTopicpartitions().get(partition2).setLag(partitionLag2);
-            totallag2 += partitionLag2;
-            partition2++;
-        }
-        g.setTotalLag(totallag2);
-        log.info("totalLag for topic 2 {}", totallag2);
-        log.info("******************");
-    }
-
-
     static void arrivalRateTopic1(Graph g) {
         HttpClient client = HttpClient.newHttpClient();
         ////////////////////////////////////////////////////
@@ -229,97 +147,7 @@ public class ArrivalRates {
 
 
 
-    static void arrivalRateTopic5(ConsumerGroup g) {
-        HttpClient client = HttpClient.newHttpClient();
-        List<URI> partitions2 = new ArrayList<>();
-        try {
-            partitions2 = Arrays.asList(
-                    new URI(Constants.topic5p0),
-                    new URI(Constants.topic5p1),
-                    new URI(Constants.topic5p2),
-                    new URI(Constants.topic5p3),
-                    new URI(Constants.topic5p4)
-            );
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
-        List<URI> partitionslag2 = new ArrayList<>();
-        try {
-            partitionslag2 = Arrays.asList(
-                    new URI(Constants.topic5p0lag),
-                    new URI(Constants.topic5p1lag),
-                    new URI(Constants.topic5p2lag),
-                    new URI(Constants.topic5p3lag),
-                    new URI(Constants.topic5p4lag)
-            );
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
-        /////////////////////////////////////////////////////////////
 
-        List<CompletableFuture<String>> partitionsfutures2 = partitions2.stream()
-                .map(target -> client
-                        .sendAsync(
-                                HttpRequest.newBuilder(target).GET().build(),
-                                HttpResponse.BodyHandlers.ofString())
-                        .thenApply(HttpResponse::body))
-                .collect(Collectors.toList());
-
-
-        List<CompletableFuture<String>> partitionslagfuture2 = partitionslag2.stream()
-                .map(target -> client
-                        .sendAsync(
-                                HttpRequest.newBuilder(target).GET().build(),
-                                HttpResponse.BodyHandlers.ofString())
-                        .thenApply(HttpResponse::body))
-                .collect(Collectors.toList());
-
-
-        int partition2 = 0;
-        double totalarrivalstopic2 = 0.0;
-        double partitionArrivalRate2 = 0.0;
-        for (CompletableFuture<String> cf : partitionsfutures2) {
-            try {
-                partitionArrivalRate2 = Util.parseJsonArrivalRate(cf.get(), partition2);
-            } catch (InterruptedException | ExecutionException e) {
-                e.printStackTrace();
-            }
-
-            g.getTopicpartitions().get(partition2).setArrivalRate(partitionArrivalRate2);
-
-            totalarrivalstopic2 += partitionArrivalRate2;
-            partition2++;
-        }
-        g.setTotalArrivalRate(totalarrivalstopic2);
-        log.info("totalArrivalRate for  topic 5 {}", totalarrivalstopic2);
-
-
-        partition2 = 0;
-        double totallag2 = 0.0;
-        long partitionLag2 = 0L;
-
-        for (CompletableFuture<String> cf : partitionslagfuture2) {
-            try {
-                partitionLag2 = Util.parseJsonArrivalLag(cf.get(), partition2).longValue();
-            } catch (InterruptedException | ExecutionException e) {
-                e.printStackTrace();
-            }
-
-            g.getTopicpartitions().get(partition2).setLag(partitionLag2);
-            totallag2 += partitionLag2;
-            partition2++;
-        }
-
-        log.info("totalLag for topic 5 {}", totallag2);
-     /*   for (int i = 0; i <= 4; i++) {
-            log.info("topic 5 partition {} has the following arrival rate {} and lag {}", i, Scale5p.topicpartitions5.get(i).getArrivalRate(),
-                    Scale5p.topicpartitions5.get(i).getLag());
-        }*/
-        g.setTotalLag(totallag2);
-
-        log.info("******************");
-
-    }
 
     static void arrivalRateTopicGeneral(ConsumerGroup g) {
 
@@ -333,11 +161,11 @@ public class ArrivalRates {
         List<URI> partitions2 = new ArrayList<>();
         try {
             partitions2 = Arrays.asList(
-                    new URI(arrivalqueries.get(0)),
                     new URI(arrivalqueries.get(1)),
                     new URI(arrivalqueries.get(2)),
                     new URI(arrivalqueries.get(3)),
-                    new URI(arrivalqueries.get(4))
+                    new URI(arrivalqueries.get(4)),
+                    new URI(arrivalqueries.get(5))
             );
         } catch (URISyntaxException e) {
             e.printStackTrace();
@@ -345,11 +173,11 @@ public class ArrivalRates {
         List<URI> partitionslag2 = new ArrayList<>();
         try {
             partitionslag2 = Arrays.asList(
-                    new URI(lagqueries.get(0)),
                     new URI(lagqueries.get(1)),
                     new URI(lagqueries.get(2)),
                     new URI(lagqueries.get(3)),
-                    new URI(lagqueries.get(4))
+                    new URI(lagqueries.get(4)),
+                    new URI(lagqueries.get(5))
             );
         } catch (URISyntaxException e) {
             e.printStackTrace();

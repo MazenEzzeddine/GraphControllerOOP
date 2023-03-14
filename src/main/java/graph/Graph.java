@@ -7,20 +7,21 @@ import java.util.Stack;
 public class Graph {
     private final Vertex[] V;
     private int vMax;
+    private final int[][] adjMat;
+    public int nV;
+    private final Stack<Vertex> s;
+    private final Stack<Vertex> topoStack;
+
 
     public int[][] getAdjMat() {
         return adjMat;
     }
 
-    private final int[][] adjMat;
-    public int nV;
-    private final Stack<Vertex> s;
 
     public Stack<Vertex> getTopoStack() {
         return topoStack;
     }
 
-    private final Stack<Vertex> topoStack;
 
     public Graph(int vMax) {
         this.vMax = vMax; // Maximum vertex can vbe added

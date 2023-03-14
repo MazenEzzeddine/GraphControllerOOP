@@ -11,15 +11,6 @@ public class ConsumerGroup {
 
     String inputTopic;
     String name;
-
-    public String getKafkaName() {
-        return kafkaName;
-    }
-
-    public void setKafkaName(String kafkaName) {
-        this.kafkaName = kafkaName;
-    }
-
     String kafkaName;
     Integer size;
     ArrayList<Partition> topicpartitions;
@@ -28,7 +19,6 @@ public class ConsumerGroup {
     double dynamicAverageMaxConsumptionRate;
     double wsla = 5;
     Instant lastUpScaleDecision = Instant.now();
-
 
 
     public ConsumerGroup(String inputTopic, Integer size, double dynamicAverageMaxConsumptionRate, double wsla, String name, String kname) {
@@ -42,6 +32,14 @@ public class ConsumerGroup {
         for (int i = 0; i <= 4; i++) {
             topicpartitions.add(new Partition(i, 0, 0));
         }
+    }
+
+    public String getKafkaName() {
+        return kafkaName;
+    }
+
+    public void setKafkaName(String kafkaName) {
+        this.kafkaName = kafkaName;
     }
 
     public String getName() {

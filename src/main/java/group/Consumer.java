@@ -31,9 +31,6 @@ public class Consumer {
     }
 
 
-    //TODO attention to when bin packing using average arrival rates or average lag
-    //TODO set remaining capacities accordingly
-
     public void assignPartition(Partition partition) {
         assignedPartitions.add(partition);
         remainingLagCapacity -= partition.getLag();
