@@ -25,7 +25,6 @@ public class ArrivalRates {
         List<String> arrivalqueries = Constants.getQueriesArrival(topic);
         List<String> lagqueries = Constants.getQueriesLag(topic, cg);
 
-
         HttpClient client = HttpClient.newHttpClient();
         List<URI> partitions2 = new ArrayList<>();
         try {
@@ -89,7 +88,6 @@ public class ArrivalRates {
         g.setTotalArrivalRate(totalarrivalstopic2);
         log.info("totalArrivalRate for  topic  {} {}", g.getInputTopic() , totalarrivalstopic2);
 
-
         partition2 = 0;
         double totallag2 = 0.0;
         long partitionLag2 = 0L;
@@ -105,9 +103,7 @@ public class ArrivalRates {
             totallag2 += partitionLag2;
             partition2++;
         }
-
         log.info("totalLag for topic {} {}", g.getInputTopic(), totallag2);
-
         g.setTotalLag(totallag2);
 
 

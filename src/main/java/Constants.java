@@ -34,9 +34,7 @@ public class Constants {
 
 
    static  List<String> getQueriesLag(String topicName, String gname) {
-
         List<String> querieslag = new ArrayList<>();
-
          String topic1lag = "http://prometheus-operated:9090/api/v1/query?query=" +
                 "sum(kafka_consumergroup_lag%7Bconsumergroup=%22"+gname+"%22,topic=%22"+ topicName+ "%22,namespace=%22default%22%7D)%20by%20(consumergroup,topic)";
          String topic1p0lag = "http://prometheus-operated:9090/api/v1/query?query=" +

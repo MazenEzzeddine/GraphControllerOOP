@@ -13,12 +13,9 @@ public class Vertex {
         this.g = g;
     }
 
-
     public ConsumerGroup getG() {
         return g;
     }
-
-
 
     @Override
     public String toString() {

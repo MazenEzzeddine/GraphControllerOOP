@@ -37,35 +37,27 @@ public class ConsumerGroup {
     public Double getBranchFactor() {
         return branchFactor;
     }
-
     public void setBranchFactor(Double branchFactor) {
         this.branchFactor = branchFactor;
     }
-
     public String getKafkaName() {
         return kafkaName;
     }
-
     public void setKafkaName(String kafkaName) {
         this.kafkaName = kafkaName;
     }
-
     public String getName() {
         return name;
     }
-
     public void setName(String name) {
         this.name = name;
     }
-
     public Integer getSize() {
         return size;
     }
-
     public void setSize(Integer size) {
         this.size = size;
     }
-
     public double getDynamicAverageMaxConsumptionRate() {
         return dynamicAverageMaxConsumptionRate;
     }
@@ -76,21 +68,16 @@ public class ConsumerGroup {
         return wsla;
     }
 
-
     public Instant getLastUpScaleDecision() {
         return lastUpScaleDecision;
     }
-
     public void setLastUpScaleDecision(Instant lastUpScaleDecision) {
         this.lastUpScaleDecision = lastUpScaleDecision;
     }
 
-
     public String getInputTopic() {
         return inputTopic;
     }
-
-
     public ArrayList<Partition> getTopicpartitions() {
         return topicpartitions;
     }
@@ -99,7 +86,6 @@ public class ConsumerGroup {
     public double getTotalArrivalRate() {
         return totalArrivalRate;
     }
-
     public void setTotalArrivalRate(double totalArrivalRate) {
         this.totalArrivalRate = totalArrivalRate;
     }
@@ -107,7 +93,6 @@ public class ConsumerGroup {
     public double getTotalLag() {
         return totalLag;
     }
-
     public void setTotalLag(double totalLag) {
         this.totalLag = totalLag;
     }

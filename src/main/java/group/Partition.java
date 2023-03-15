@@ -10,7 +10,6 @@ public class Partition implements Comparable<Partition> {
         this.id = id;
         this.lag = lag;
         this.arrivalRate = arrivalRate;
-
     }
 
     public int getId() {

@@ -17,8 +17,6 @@ public class Graph {
         return adjMat;
     }
 
-
-
     public Graph(int vMax) {
         this.vMax = vMax; // Maximum vertex can vbe added
         nV = 0; // counter for the vertices we will work with 1
