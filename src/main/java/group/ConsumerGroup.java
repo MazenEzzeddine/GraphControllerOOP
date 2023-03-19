@@ -88,6 +88,10 @@ public class ConsumerGroup {
     }
     public void setTotalArrivalRate(double totalArrivalRate) {
         this.totalArrivalRate = totalArrivalRate;
+
+        for (int i = 0; i < 5; i++) {
+           topicpartitions.get(i).setArrivalRate(totalArrivalRate/5.0);
+        }
     }
 
     public double getTotalLag() {

@@ -25,11 +25,11 @@ public class Main {
      private static void initialize() throws InterruptedException, ExecutionException {
          Graph g = new Graph(3);
 
-         ConsumerGroup g0 = new ConsumerGroup("testtopic1", 1, 175, 5,
+         ConsumerGroup g0 = new ConsumerGroup("testtopic1", 1, 191, 5,
                  "cons1persec", "testgroup1");
-         ConsumerGroup g1 = new ConsumerGroup("testtopic2", 1,  175, 5,
+         ConsumerGroup g1 = new ConsumerGroup("testtopic2", 1,  191, 5,
                  "cons1persec2", "testgroup2");
-         ConsumerGroup g2 = new ConsumerGroup("testtopic5", 1,  175, 5,
+         ConsumerGroup g2 = new ConsumerGroup("testtopic5", 1,  191, 5,
                  "cons1persec5", "testgroup5");
 
 
@@ -60,7 +60,7 @@ public class Main {
             log.info("Sleeping for 5 seconds");
             log.info("******************************************");
             log.info("******************************************");
-            Thread.sleep(15000);
+            Thread.sleep(30000);
         }
     }
 
@@ -71,7 +71,6 @@ public class Main {
         for (int i = 0; i < topoOrder.size(); i++) {
             ArrivalRates.arrivalRateTopicGeneral(topoOrder.get(i).getG());
         }
-
 
 
        /* ArrivalRates.arrivalRateTopic1(g);
@@ -91,9 +90,6 @@ public class Main {
                 BinPack.scaleAsPerBinPack(topoOrder.get(i).getG());
             }
         }
-
-
-
     }
 
 
@@ -109,21 +105,16 @@ public class Main {
                     }
                 }
 
-
                 if (parentsArrivalRate ==0) {
-                   ArrivalRates.arrivalRateTopicGeneral(g.getVertex(m).getG());
+                   //ArrivalRates.arrivalRateTopicGeneral(g.getVertex(m).getG());
                    log.info("Arrival rate of micorservice {} {}",m,g.getVertex(m).getG().getTotalArrivalRate());
                 } else {
                     g.getVertex(m).getG().setTotalArrivalRate(parentsArrivalRate*g.getVertex(m).getG().getBranchFactor());
+                    log.info("Arrival rate of micorservice {} {}",m,g.getVertex(m).getG().getTotalArrivalRate());
                     log.info("Arrival rate of micorservice {} {}",m,parentsArrivalRate*g.getVertex(m).getG().getBranchFactor());
 
                 }
             }
-
-
-
-
-
 
 
 }
