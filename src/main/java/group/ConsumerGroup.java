@@ -17,7 +17,7 @@ public class ConsumerGroup {
     double totalArrivalRate;
     double totalLag;
     double dynamicAverageMaxConsumptionRate;
-    double wsla = 5;
+    double wsla = 2;
     Instant lastUpScaleDecision = Instant.now();
     Double branchFactor;
 

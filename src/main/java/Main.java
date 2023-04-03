@@ -86,7 +86,7 @@ public class Main {
             log.info("Branch factor of ms  {} is {}", i, g.getVertex(i).getG().getBranchFactor());
             getArrivalRate(g, i);
             if (Duration.between(topoOrder.get(i).getG().getLastUpScaleDecision(), Instant.now()).getSeconds() > 15) {
-                //QueryRate.queryConsumerGroup();
+                //queryconsumergroups.QueryRate.queryConsumerGroup();
                 BinPack.scaleAsPerBinPack(topoOrder.get(i).getG());
             }
         }
